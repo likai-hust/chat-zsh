@@ -4,7 +4,7 @@ An oh-my-zsh plugin based on chatgpt, which can translate commands described in 
 # Usage
 Clone the repository inside your oh-my-zsh repo:
 ```shell
-git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/chat-zsh
+git clone https://github.com/likai-hust/chat-zsh.git ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/chat-zsh
 ```
 Append plugins and openai key in your `.zshrc` file:
 ```
