@@ -27,12 +27,12 @@ plugins=(git chat-zsh) # append chat-zsh to plugins
 and then command `source ~/.zshrc` to enable the plugin. Type message as follow:
 
 ```
-$ # Generate an rsa key, length 2048
+$ # Generate a rsa key, length 2048
 ```
 th command will be generated as:
 ```
 $ ssh-keygen -t rsa -b 2048
 ```
-
+![ezgif-1-a3f115c115](https://github.com/likai-hust/chat-zsh/assets/6956833/81ac1f7d-8b2b-4ebe-b9cf-ed0a3a48e655)
 # License
 See LICENSE for more information.
