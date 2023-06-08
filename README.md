@@ -6,6 +6,10 @@ Clone the repository inside your oh-my-zsh repo:
 ```shell
 git clone https://github.com/likai-hust/chat-zsh.git ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/chat-zsh
 ```
+Install openai python module(The dependency on Python will be removed in the future).
+```
+pip install openai
+```
 Append plugins and openai key in your `.zshrc` file:
 ```
 # openai key
