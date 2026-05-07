@@ -1,6 +1,6 @@
 # chat-zsh
 
-An oh-my-zsh plugin based on chatgpt, which can translate commands described in natural language into shell commands. Just enter `# your command description want to generate` on the command line, press the Enter key to translate it into a shell command, and then press the Enter key to execute it.
+An oh-my-zsh plugin based on chatgpt, which can translate commands described in natural language into shell commands. Just enter `## your command description want to generate` on the command line, press the Enter key to translate it into a shell command, and then press the Enter key to execute it.
 # Usage
 STEP 1: Clone the repository inside your oh-my-zsh repo:
 ```shell
@@ -14,11 +14,11 @@ OPENAI_API_KEY="YOU_API_KEY"
 ```
 ```
 # your model name, or "deepseek-chat"
-MODEL_NAME="gtp-3.5-turbo" 
+MODEL_NAME="gpt-5.4-nano"
 ```
 ```
 # default is https://api.openai.com/v1/chat/completions, or https://api.deepseek.com/v1/chat/completions
-# OPENAI_ENDPOINT="api endpoint" 
+# OPENAI_ENDPOINT="api endpoint"
 ```
 ```
 plugins=(git chat-zsh) # append chat-zsh to plugins
@@ -27,7 +27,7 @@ plugins=(git chat-zsh) # append chat-zsh to plugins
 and then command `source ~/.zshrc` to enable the plugin. Type message as follow:
 
 ```
-$ # Generate a rsa key, length 2048
+$ ## Generate a rsa key, length 2048
 ```
 the command will be generated as:
 ```
