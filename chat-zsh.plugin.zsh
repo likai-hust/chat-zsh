@@ -42,9 +42,9 @@ function prompt_to_command_sh() {
 
 function zsh_line_finish() {
   local buffer=$BUFFER
-  local first_letter="${buffer:0:1}"
-  local remaining="${buffer:1}"
-  if [[ -n $buffer && $first_letter = '#' ]]; then
+  local first_two="${buffer:0:2}"
+  local remaining="${buffer:2}"
+  if [[ -n $buffer && $first_two = '##' ]]; then
     local new_str
     # curl default
     new_str=$(prompt_to_command_sh "$remaining")
