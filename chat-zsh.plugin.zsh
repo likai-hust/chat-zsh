@@ -7,25 +7,25 @@ function generate_command_response() {
   api_key="$3"
   model_name="$4"
 
+  local sys_prompt="You are a senior engineer who has mastered the command line ability of natural language translation. For the natural language input by the user, it is converted into a command line command according to the description content. Output may only contain executable commands, any other descriptive or explanatory text is prohibited. For the answer, you simply output a one-line translatable command, stripping out any description preceding the command. 1. For multi-line commands, use & or && to connect. 2. For dangerous commands, add DANGEROUS at the beginning of the command. 3. Never wrap output in markdown code fences."
+
+  # Build the JSON payload via jq --arg to safely handle any special characters
+  local payload
+  payload=$(jq -n \
+    --arg model "$model_name" \
+    --arg desc "$command_desc" \
+    --arg sys "$sys_prompt" \
+    '{model:$model,messages:[{role:"system",content:$sys},{role:"user",content:"Install Node.js on Mac"},{role:"assistant",content:"brew install node"},{role:"user",content:"Delete all files or folders"},{role:"assistant",content:"DANGEROUS rm -rf *"},{role:"user",content:$desc}],temperature:0,stream:false}')
+
   # Send the request to the API
-  response=$(curl --location -s $endpoint \
+  local response
+  response=$(curl -s "$endpoint" \
     --header "Authorization: Bearer $api_key" \
     --header "Content-Type: application/json" \
-    --data "{
-    \"model\": \"$model_name\",
-    \"messages\": [
-        {\"role\": \"system\", \"content\": \"You are a senior engineer who has mastered the command line ability of natural language translation. For the natural language input by the user, it is converted into a command line command according to the description content. Output may only contain executable commands, any other descriptive or explanatory text is prohibited. For the answer, you simply output a one-line translatable command, stripping out any description preceding the command.  1. For multi-line commands, use '&' or '&&' to connect. 2. For dangerous commands, add \\\"dangerous\\\" at the beginning of the command\"},
-            {\"role\": \"user\", \"content\": \"mac安装node js\"},
-            {\"role\": \"assistant\", \"content\": \"brew install node\"},
-            {\"role\": \"user\", \"content\": \"删除所有的文件或文件夹\"},
-            {\"role\": \"assistant\", \"content\": \"DANGEROUS rm -rf *\"},
-            {\"role\": \"user\", \"content\": \"$command_desc\"}
-    ],
-    \"temperature\": 0,
-    \"stream\": false
-}")
-  # Extract the content field from the response
-  content=$(echo $response | jq -r '.choices[0].message.content')
+    --data "$payload")
+
+  # Extract content; suppress jq errors and handle null/missing fields gracefully
+  content=$(printf '%s' "$response" | jq -r '.choices[0].message.content // empty' 2>/dev/null | sed '/^```/d')
 
   # Return the content
   echo "$content"
